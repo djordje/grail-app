@@ -1,0 +1,18 @@
+default: &default
+  adapter: postgresql
+  encoding: utf8
+  pool: 20
+
+
+development:
+  <<: *default
+  database: test_api_dev
+
+test: &test
+  <<: *default
+  database: test_api_test
+
+
+production:
+  <<: *default
+  database: test_api_prod
