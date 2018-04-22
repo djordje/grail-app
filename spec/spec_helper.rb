@@ -18,7 +18,7 @@ RSpec.configure do |config|
 
   require 'factory_bot'
   require 'rspec-grape'
-  require_relative '../config/app'
+  require_relative '../config/initialize'
 
   config.include FactoryBot::Syntax::Methods
 

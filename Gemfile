@@ -31,6 +31,6 @@ end
 
 group :development, :test do
   gem 'dotenv', '~> 2.2', require: false
+  gem 'factory_bot', '~> 4.8', require: false
   gem 'rubocop', '~> 0.55.0', require: false
-  gem "factory_bot", "~> 4.8", require: false
 end
