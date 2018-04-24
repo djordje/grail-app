@@ -56,7 +56,12 @@ module Grail
     end
 
     def db_config
-      @db_config ||= YAML.safe_load(File.read(config_dir.join('database.yml')))
+      @db_config ||= YAML.safe_load(
+        File.read(config_dir.join('database.yml')),
+        [],
+        [],
+        true
+      )
     end
 
     def load_dotenv
