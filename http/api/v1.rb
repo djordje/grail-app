@@ -9,9 +9,6 @@ class API
       { status: :healthy }
     end
 
-    mount Test
-
-    add_swagger_documentation add_version: 'v1'
+    add_swagger_documentation add_version: 'v1', doc_version: Grail.app.version
   end
-
 end
