@@ -4,13 +4,16 @@ require_relative 'app'
 require 'rack/body_proxy'
 
 unless defined? Rails
+  # Unless Rails exists mock namespace and necessary methods
+  #   This makes ActiveRecord rake tasks functional
   module Rails
+    # :nodoc:
     class Paths
       def paths
         {
-            'db/migrate' => [
-                Grail::App.instance.db_migrate_dir
-            ]
+          'db/migrate' => [
+            Grail::App.instance.db_migrate_dir
+          ]
         }
       end
 
@@ -28,7 +31,12 @@ unless defined? Rails
 end
 
 unless defined? ActionDispatch::Executor
+  # Unless Rails or ActionPack loaded ActionDispatch::Executor doesn't exist
+  # This is required to have proper connection pool management in Rack
+  # @example
+  #   use ActionDispatch::Executor, ActiveSupport::Executor
   module ActionDispatch
+    # :nodoc:
     class Executor
       def initialize(app, executor)
         @app      = app
@@ -39,7 +47,9 @@ unless defined? ActionDispatch::Executor
         state = @executor.run!
         begin
           response = @app.call(env)
-          returned = response << ::Rack::BodyProxy.new(response.pop) { state.complete! }
+          returned = response << ::Rack::BodyProxy.new(response.pop) do
+            state.complete!
+          end
         ensure
           state.complete! unless returned
         end

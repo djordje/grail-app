@@ -5,18 +5,27 @@ require 'dotenv'
 require 'active_record'
 require 'active_support/dependencies'
 
+# Grail is a namespace of a logic related to bootstrap Grape and ActiveRecord
 module Grail
+  # @return [App]
+  def self.app
+    App.instance
+  end
+
+  # Setup Grail app environment and expose dir paths
   class App
     include Singleton
 
+    attr_accessor :version
     attr_reader :root
 
     delegate :autoload_paths=, :autoload_paths, to: ActiveSupport::Dependencies
 
-    def self.start(environment, root_path)
+    def self.start(environment, root_path, version = '0.0.1')
       instance.tap do |app|
-        app.root = root_path
-        app.env  = environment
+        app.version = version
+        app.root    = root_path
+        app.env     = environment
         app.setup_db
         app.load_dotenv
       end
@@ -26,8 +35,8 @@ module Grail
       @root = Pathname.new(path)
     end
 
-    def env=(e = nil)
-      @env = e.to_sym if e
+    def env=(env = nil)
+      @env = env.to_sym if env
     end
 
     def env
@@ -47,7 +56,7 @@ module Grail
     end
 
     def db_config
-      @db_config ||= YAML.load(File.read(config_dir.join('database.yml')))
+      @db_config ||= YAML.safe_load(File.read(config_dir.join('database.yml')))
     end
 
     def load_dotenv
