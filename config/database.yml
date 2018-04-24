@@ -6,13 +6,13 @@ default: &default
 
 development:
   <<: *default
-  database: test_api_dev
+  database: grail_appdev
 
 test: &test
   <<: *default
-  database: test_api_test
+  database: grail_apptest
 
 
 production:
   <<: *default
-  database: test_api_prod
+  database: grail_appprod
