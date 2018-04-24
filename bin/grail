@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+require 'irb'
+require 'irb/completion'
+require 'bundler/setup'
+
+Bundler.require
+
+require_relative '../config/initialize'
+
+exit unless ARGV.shift == 'console'
+
+IRB.start
