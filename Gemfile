@@ -18,6 +18,7 @@ gem 'activemodel', '~> 5.2'
 gem 'activerecord', '~> 5.2'
 gem 'activesupport', '~> 5.2'
 
+gem 'bcrypt', '~> 3.1.7'
 gem 'pg', '~> 1.0'
 
 group :development do
