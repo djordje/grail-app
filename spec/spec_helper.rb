@@ -22,6 +22,14 @@ RSpec.configure do |config|
 
   config.include FactoryBot::Syntax::Methods
 
+  # Run each test inside a DB transaction
+  config.around(:each) do |test|
+    ActiveRecord::Base.transaction do
+      test.run
+      raise ActiveRecord::Rollback
+    end
+  end
+
   config.before(:suite) do
     FactoryBot.find_definitions
   end
