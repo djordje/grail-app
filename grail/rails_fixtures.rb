@@ -7,7 +7,6 @@ unless defined? Rails
   # Unless Rails exists mock namespace and necessary methods
   #   This makes ActiveRecord rake tasks functional
   module Rails
-    extend SingleForwardable
     # :nodoc:
     class Paths
       def paths
@@ -23,7 +22,13 @@ unless defined? Rails
       end
     end
 
-    delegate %i[root env] => 'Grail.app'
+    def self.root
+      Grail.app.root
+    end
+
+    def self.env
+      Grail.app.env.to_s
+    end
 
     def self.application
       Paths.new
