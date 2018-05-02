@@ -8,4 +8,4 @@ app = Grail::App.start(
   File.expand_path('../', File.dirname(__FILE__)),
   '0.0.2'
 )
-app.autoload_paths += %w[http]
+app.autoload_paths += %w[http models]
